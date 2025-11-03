@@ -5,8 +5,12 @@ import numpy as np
 
 from ultralytics import YOLO
 
+import json
+
 model = YOLO("yolo11n.pt")
-cap = cv2.VideoCapture(0)  # Open the default webcam
+path = "../data/pohang/sequence.mp4"
+cap = cv2.VideoCapture(path)
+# cap = cv2.VideoCapture(0)  # Open the default webcam
 track_history = defaultdict(lambda: [])
 
 while cap.isOpened():
@@ -14,7 +18,10 @@ while cap.isOpened():
     if success:
         results = model.track(frame, persist=True)
         boxes = results[0].boxes.xywh.cpu()
-        track_ids = results[0].boxes.id.int().cpu().tolist()
+        if results[0].boxes.id is None:
+            track_ids = []
+        else:
+            track_ids = results[0].boxes.id.int().cpu().tolist()
         annotated_frame = results[0].plot()
         for box, track_id in zip(boxes, track_ids):
             x, y, w, h = box
@@ -37,3 +44,6 @@ while cap.isOpened():
         break
 cap.release()
 cv2.destroyAllWindows()
+
+with open("metrics/yolo11n_webcam_track_history.json", "w") as f:
+    json.dump(dict(track_history), f)
