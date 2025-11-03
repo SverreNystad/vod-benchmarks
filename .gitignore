@@ -5,3 +5,4 @@
 *.avi
 *.log
 *.pt
+*__pycache__/
