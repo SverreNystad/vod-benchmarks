@@ -7,7 +7,6 @@ with open("metrics/yolo11n_webcam_track_history.json", "r") as f:
 
 plot_track(
     track=track_history["96"],
-    track_id=0,
-    axis_to_plot="x",
-    path="experiments/track_0_x_coordinates.png",
+    value_to_plot="width",
+    path="experiments/track_96_width_coordinates.png",
 )

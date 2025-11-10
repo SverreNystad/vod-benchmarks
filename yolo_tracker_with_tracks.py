@@ -26,10 +26,8 @@ while cap.isOpened():
         for box, track_id in zip(boxes, track_ids):
             x, y, w, h = box
             track = track_history[track_id]
-            track.append((float(x), float(y)))
-            if len(track) > 30:
-                track.pop(0)
-            points = np.hstack(track).astype(np.int32).reshape((-1, 1, 2))
+            track.append((float(x), float(y), float(w), float(h)))
+            points = np.hstack((track)).astype(np.int32).reshape((-1, 1, 2))
             cv2.polylines(
                 annotated_frame,
                 [points],
