@@ -7,7 +7,7 @@ from ultralytics import YOLO
 
 import json
 
-model = YOLO("yolo11n.pt")
+model = YOLO("yolo11l.pt")
 path = "../data/pohang/sequence.mp4"
 cap = cv2.VideoCapture(path)
 # cap = cv2.VideoCapture(0)  # Open the default webcam
@@ -43,5 +43,5 @@ while cap.isOpened():
 cap.release()
 cv2.destroyAllWindows()
 
-with open("metrics/yolo11n_webcam_track_history.json", "w") as f:
+with open("metrics/yolo11l_webcam_track_history.json", "w") as f:
     json.dump(dict(track_history), f)
